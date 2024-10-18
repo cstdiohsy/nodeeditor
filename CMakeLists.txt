@@ -75,21 +75,21 @@ set(CPP_SOURCE_FILES
   src/AbstractNodeGeometry.cpp
   src/BasicGraphicsScene.cpp
   src/ConnectionGraphicsObject.cpp
-  src/ConnectionPainter.cpp
   src/ConnectionState.cpp
   src/ConnectionStyle.cpp
   src/DataFlowGraphModel.cpp
   src/DataFlowGraphicsScene.cpp
+  src/DefaultConnectionPainter.cpp
   src/DefaultHorizontalNodeGeometry.cpp
+  src/DefaultNodePainter.cpp
   src/DefaultVerticalNodeGeometry.cpp
   src/Definitions.cpp
   src/GraphicsView.cpp
   src/GraphicsViewStyle.cpp
-  src/NodeDelegateModelRegistry.cpp
   src/NodeConnectionInteraction.cpp
   src/NodeDelegateModel.cpp
+  src/NodeDelegateModelRegistry.cpp
   src/NodeGraphicsObject.cpp
-  src/DefaultNodePainter.cpp
   src/NodeState.cpp
   src/NodeStyle.cpp
   src/StyleCollection.cpp
@@ -98,6 +98,7 @@ set(CPP_SOURCE_FILES
 )
 
 set(HPP_HEADER_FILES
+  include/QtNodes/internal/AbstractConnectionPainter.hpp
   include/QtNodes/internal/AbstractGraphModel.hpp
   include/QtNodes/internal/AbstractNodeGeometry.hpp
   include/QtNodes/internal/AbstractNodePainter.hpp
@@ -110,7 +111,6 @@ set(HPP_HEADER_FILES
   include/QtNodes/internal/ConnectionStyle.hpp
   include/QtNodes/internal/DataFlowGraphicsScene.hpp
   include/QtNodes/internal/DataFlowGraphModel.hpp
-  include/QtNodes/internal/DefaultNodePainter.hpp
   include/QtNodes/internal/Definitions.hpp
   include/QtNodes/internal/Export.hpp
   include/QtNodes/internal/GraphicsView.hpp
@@ -128,11 +128,12 @@ set(HPP_HEADER_FILES
   include/QtNodes/internal/Serializable.hpp
   include/QtNodes/internal/Style.hpp
   include/QtNodes/internal/StyleCollection.hpp
-  src/ConnectionPainter.hpp
-  src/DefaultHorizontalNodeGeometry.hpp
-  src/DefaultVerticalNodeGeometry.hpp
-  src/NodeConnectionInteraction.hpp
-  src/UndoCommands.hpp
+  include/QtNodes/internal/DefaultConnectionPainter.hpp
+  include/QtNodes/internal/DefaultHorizontalNodeGeometry.hpp
+  include/QtNodes/internal/DefaultNodePainter.hpp
+  include/QtNodes/internal/DefaultVerticalNodeGeometry.hpp
+  include/QtNodes/internal/NodeConnectionInteraction.hpp
+  include/QtNodes/internal/UndoCommands.hpp
 )
 
 # If we want to give the option to build a static library,
@@ -165,7 +166,7 @@ target_link_libraries(QtNodes
 
 target_compile_definitions(QtNodes
   PUBLIC
-    NODE_EDITOR_SHARED
+    $<IF:$<BOOL:${BUILD_SHARED_LIBS}>, NODE_EDITOR_SHARED, NODE_EDITOR_STATIC>
   PRIVATE
     NODE_EDITOR_EXPORTS
     #NODE_DEBUG_DRAWING
